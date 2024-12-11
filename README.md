@@ -7,10 +7,8 @@ This project is a fully functional Uber clone application using Google Cloud API
 - [Architecture](#architecture)
 - [Technologies Used](#technologies-used)
 - [Setup and Installation](#setup-and-installation)
-- [Configuration](#configuration)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+
 
 ## Features
 - User Authentication and Authorization
@@ -60,7 +58,7 @@ The application follows a microservices architecture, leveraging multiple servic
 
 
 
-**File: /Backend/README.md**
+# File: ./Backend
 ```markdown
 # User Routes Documentation
 
