@@ -1,4 +1,5 @@
-# Uber Clone App
+# Uber Clone App 
+#### (only Mobile Compatible)
 
 This project is a fully functional Uber clone application using Google Cloud API and various libraries and frameworks. The app includes features for both riders and drivers, real-time tracking, payment processing, and more.
 
