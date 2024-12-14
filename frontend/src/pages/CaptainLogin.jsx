@@ -1,20 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { captainAtom } from "./Atoms";
+import { useSetRecoilState } from "recoil";
+
+
 
 function CaptainLogin() {
-  
   const navigate = useNavigate();
+  const setCaptainData = useSetRecoilState(captainAtom)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [captainloginData, setCaptainloginData] = useState({})
 
-    useEffect(() => {
-      setCaptainloginData({ email, password });
-    }, [email, password]);
 
-  function submitHandler(e) {
+  async function submitHandler(e) {
     e.preventDefault();
-    console.log(captainloginData)
+
+    const captainloginData = {
+      email: email,
+      password: password
+    }
+    
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/login`, captainloginData);
+    
+    if(response.status === 200) {
+      const data = response.data;
+      console.log(data);
+
+      setCaptainData((prevUser) => [
+        ...prevUser,
+        {
+          id: data.captain._id,
+          fullname: data.captain.fullname,
+          email: data.captain.email,
+          vehicle: data.captain.vehicle,
+          status: data.captain.status
+        },
+      ]);
+
+      localStorage.setItem('token', data.token);
+      navigate('/captain-home');
+    } else {
+      alert("invalid username or password")
+    }
+
     setEmail('');
     setPassword('');
   }

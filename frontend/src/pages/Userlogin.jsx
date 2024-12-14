@@ -1,19 +1,60 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useSetRecoilState } from "recoil";
+import { userAtom } from "./Atoms";
 
 function Userlogin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userloginData, setUserloginData] = useState({});
+  const setUserData = useSetRecoilState(userAtom);
 
-  useEffect(() => {
-    setUserloginData({ email, password });
-  }, [email, password]);
+  // setUser((prevUser) => ({ ...prevUser, [name]: value, }));
 
-  function submitHandler(e) {
+  async function submitHandler(e) {
     e.preventDefault();
-    console.log(userloginData);
+
+    const userloginData = {
+      email: email,
+      password: password,
+    };
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/user/login`,
+      userloginData
+    );
+    if (response.status === 200) {
+      const data = response.data;
+
+      setUserData((prevUser) => [
+        ...prevUser,
+        {
+          _id: data.user._id,
+          fullname: data.user.fullname,
+          email: data.user.email,
+        },
+      ]);
+
+      // setUserData((prevUser)=>[
+      //   ...prevUser,
+      //   {
+      //     _id: user._id,
+      //     fullname: {
+      //         firstname: user.firstname,
+      //         lastname: user.lastname
+      //     },
+      //     email: user.email,
+      //   }
+      // ]);
+
+      localStorage.setItem("token", data.token);
+
+      navigate("/home");
+    } else {
+      alert("Invalid username or password");
+    }
+
     setEmail("");
     setPassword("");
   }
@@ -61,18 +102,27 @@ function Userlogin() {
         <div
           className=" text-sm w-full text-center font-bold"
           onClick={() => navigate("/register")}
-        > New user?
+        >
+          {" "}
+          New user?
           <span className="text-blue-700 mx-1"> Create account here </span>
         </div>
-      <p className="text-[10px] ml-5 leading-4 w-10/12 my-2 text-gray-600">By proceeding, you consent to get calls, WhatsApp or SMS messages, including by automated means, from Uber and its affiliates to the number provided.</p>
-
+        <p className="text-[10px] ml-5 leading-4 w-10/12 my-2 text-gray-600">
+          By proceeding, you consent to get calls, WhatsApp or SMS messages,
+          including by automated means, from Uber and its affiliates to the
+          number provided.
+        </p>
       </form>
 
       <button
         onClick={() => navigate("/captain-login")}
         className="w-11/12 h-14 bg-green-500 rounded-lg m-4 font-bold text-lg flex items-center justify-center gap-4"
       >
-        <img className="w-8" src="https://freelogopng.com/images/all_img/1659761425uber-driver-logo-png.png" alt="" />
+        <img
+          className="w-8"
+          src="https://freelogopng.com/images/all_img/1659761425uber-driver-logo-png.png"
+          alt=""
+        />
         Continue as Captain
       </button>
     </div>

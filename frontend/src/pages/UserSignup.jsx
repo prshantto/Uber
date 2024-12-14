@@ -1,25 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function UserSignup() {
 
   const navigate = useNavigate();
   const [firstname, setFirstName] = useState('');
   const [lastname, setLastName] = useState('');
-  const [name, setName] = useState({});
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [newUserData, setNewUserData] = useState({});
 
-      useEffect(() => {
-        setName({ firstname, lastname });
-        setNewUserData({name, email, password });
-      }, [email, password]);
-
-  function submitHandler(e) {
+  async function submitHandler(e) {
     e.preventDefault();
+
+    const newUserData = {
+      fullname: {
+        firstname: firstname,
+        lastname: lastname
+      },
+      email,
+      password
+    }
+
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`, newUserData);
+    if (response.status === 201) {
+      const data = response.data;
+      localStorage.setItem('token', data.token);
+      navigate('/login');
+    } else {
+      alert('Failed to register. Please try again.');
+    }
+
+
+
     console.log(newUserData);
-    console.log(name.firstname, name.lastname)
     setFirstName("");
     setLastName("");
     setEmail("");

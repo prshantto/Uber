@@ -40,7 +40,6 @@ const captainSchema = new mongoose.Schema({
         plate:{
             type: String,
             required: true,
-            unique: true,
         },
         type:{
             type: String,

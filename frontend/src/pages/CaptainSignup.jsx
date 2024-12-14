@@ -1,28 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 
 function CaptainSignup() {
   const navigate = useNavigate();
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
-  const [name, setName] = useState({});
   const [email, setEmail] = useState("");
-  const [vehicle, setVehicle] = useState({});
   const [color, setColor] = useState("");
   const [capacity, setCapacity] = useState("");
   const [type, setType] = useState("Vehicle Type");
   const [numberPlate, setNumberPlate] = useState("");
   const [password, setPassword] = useState("");
-  const [newCaptainData, setNewCaptainData] = useState({});
 
-  useEffect(() => {
-    setName({ firstname, lastname });
-    setVehicle({ color, capacity, numberPlate, type });
-    setNewCaptainData({ name, email, vehicle, password });
-  }, [email, password]);
-
-  function submitHandler(e) {
+  async function submitHandler(e) {
     e.preventDefault();
+
+    const newCaptainData = {
+        fullname:{
+            firstname: firstname,
+            lastname: lastname,
+        },
+        email : email,
+        password: password,
+       
+        vehicle: {
+            color: color,
+            capacity:capacity,
+            plate:numberPlate,
+            type:type
+        },
+    }
+
+    console.log(newCaptainData)
+
+    const responses = await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/register`, newCaptainData);
+    if (responses.status === 201) {
+      const data = responses.data;
+
+      localStorage.setItem('token', data.token);
+      navigate("/captain-login");
+    } else {
+      alert("Failed to register. Please try again.");
+    }
+
+
     console.log(newCaptainData);
     setFirstName("");
     setLastName("");
