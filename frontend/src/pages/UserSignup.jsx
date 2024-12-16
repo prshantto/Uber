@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -18,8 +18,8 @@ function UserSignup() {
         firstname: firstname,
         lastname: lastname
       },
-      email,
-      password
+      email: email.toLowerCase(),
+      password: password
     }
 
     const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`, newUserData);
@@ -30,8 +30,6 @@ function UserSignup() {
     } else {
       alert('Failed to register. Please try again.');
     }
-
-
 
     console.log(newUserData);
     setFirstName("");

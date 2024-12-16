@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { captainAtom } from "./Atoms";
@@ -17,7 +17,7 @@ function CaptainLogin() {
     e.preventDefault();
 
     const captainloginData = {
-      email: email,
+      email: email.toLowerCase(),
       password: password
     }
     
@@ -39,6 +39,7 @@ function CaptainLogin() {
       ]);
 
       localStorage.setItem('token', data.token);
+      localStorage.setItem('captain', JSON.stringify(data.captain));
       navigate('/captain-home');
     } else {
       alert("invalid username or password")

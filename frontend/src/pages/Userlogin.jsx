@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { userAtom } from "./Atoms";
 
 function Userlogin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const setUserData = useSetRecoilState(userAtom);
+  const [userData, setUserData] = useRecoilState(userAtom);
 
   // setUser((prevUser) => ({ ...prevUser, [name]: value, }));
 
@@ -16,7 +16,7 @@ function Userlogin() {
     e.preventDefault();
 
     const userloginData = {
-      email: email,
+      email: email.toLowerCase(),
       password: password,
     };
 
@@ -49,6 +49,7 @@ function Userlogin() {
       // ]);
 
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
       navigate("/home");
     } else {

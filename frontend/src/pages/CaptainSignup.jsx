@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -22,12 +22,12 @@ function CaptainSignup() {
             firstname: firstname,
             lastname: lastname,
         },
-        email : email,
+        email : email.toLowerCase(),
         password: password,
        
         vehicle: {
-            color: color,
-            capacity:capacity,
+            color: color.toLowerCase(),
+            capacity: capacity,
             plate:numberPlate,
             type:type
         },

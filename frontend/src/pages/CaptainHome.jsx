@@ -1,15 +1,17 @@
-import React from 'react'
-import { captainAtom } from './Atoms';
-import { useRecoilValue } from 'recoil';
+// import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const CaptainHome = () => {
-      const captainData = useRecoilValue(captainAtom);
-  
+function CaptainHome() {
+  const navigate = useNavigate();
+
+  const captain = JSON.parse(localStorage.getItem("captain"));
+
   return (
     <div>
-      welcome {captainData[0].fullname.firstname} {captainData[0].fullname.lastname}
+      Welcome {captain.fullname.firstname} {captain.fullname.lastname}
+      <button className="h-10 w-32 bg-slate-500" onClick={() => navigate('/logout')}>Logout</button>
     </div>
-  )
+  );
 }
 
-export default CaptainHome
+export default CaptainHome;

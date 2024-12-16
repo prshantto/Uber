@@ -1,37 +1,17 @@
-// import React, { useEffect } from 'react'
-// import { useRecoilValue } from "recoil";
-// import { userAtom } from "../../atoms/UserAtom";
-
-// function Home() {
-//   const userData = useRecoilValue(userAtom);
-
-//   useEffect(() => {
-//   console.log(userData)
-//   console.log(userData.firstname, userData.lastname)
-   
-//   }, [])
-  
-
-// const firstname = 'prashant';
-  
-//   return (
-//     <div>`welcome  {firstname} </div>
-//   )
-// }
-
-// export default Home
-
-import React from 'react'
-import { useRecoilValue } from "recoil";
-import { userAtom } from "./Atoms";
+// import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
 
-    const userData = useRecoilValue(userAtom);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
-    <div>Welcome {userData[0].fullname.firstname} {userData[0].fullname.lastname} </div>
-  )
+    <div>
+      Welcome {user.fullname.firstname} {user.fullname.lastname}
+      <button className="h-10 w-32 bg-slate-500" onClick={() => navigate('/logout')}>Logout</button>
+    </div>
+  );
 }
 
 export default Home;
