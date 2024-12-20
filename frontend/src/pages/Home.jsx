@@ -15,7 +15,7 @@ function Home() {
     <div>
       Welcome {user.fullname.firstname} {user.fullname.lastname}
       <button
-        className='h-10 w-32 bg-slate-500'
+        className="h-10 w-32 bg-slate-500"
         onClick={() => navigate("/logout")}
       >
         Logout
