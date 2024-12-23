@@ -1,10 +1,10 @@
-/* eslint-disable no-unused-vars */
 // import React, { useEffect } from "react";
 import { useRef, useState } from "react";
 import { DownOutlined } from "@ant-design/icons";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import LocationSuggestions from "../components/LocationSuggestions";
+import Vehicles from "../components/Vehicles";
 
 function Home() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -92,11 +92,13 @@ function Home() {
             />
           </form>
 
-          <div ref={suggestionRef} className="w-full bg-white">
+          <div ref={suggestionRef} className="w-full bg-white overflow-hidden">
             <LocationSuggestions />
           </div>
         </div>
       </div>
+
+      {/* <Vehicles /> */}
     </>
   );
 }
