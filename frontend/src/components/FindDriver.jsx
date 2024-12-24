@@ -1,11 +1,10 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from "react";
 
-const ConfirmRide = (props) => {
+const FindDriver = () => {
   return (
     <>
-      <h1 className="text-2xl font-bold my-5">Confirm your Ride</h1>
+      <h1 className="text-2xl font-bold my-5">Looking for Driver</h1>
 
       <img
         className="w-[50%] mb-2"
@@ -41,26 +40,8 @@ const ConfirmRide = (props) => {
           </div>
         </div>
       </div>
-
-      <div className="w-full px-5 flex items-center justify-between gap-3 my-5 font-bold text-xl text-white">
-        <button
-          onClick={() => props.setconfirmRidePanel(false)}
-          className=" bg-[#F72A29] rounded-xl px-5 py-3"
-        >
-          Cancel
-        </button>
-        <button
-          onClick={() => {
-            props.setconfirmRidePanel(false);
-            props.setfindDriverPanel(true);
-          }}
-          className=" bg-green-500 rounded-xl px-5 py-3"
-        >
-          Confirm
-        </button>
-      </div>
     </>
   );
 };
 
-export default ConfirmRide;
+export default FindDriver;

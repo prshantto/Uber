@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import LocationSuggestions from "../components/LocationSuggestions";
 import Vehicles from "../components/Vehicles";
 import ConfirmRide from "../components/ConfirmRide";
+import FindDriver from "../components/FindDriver";
 
 function Home() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -24,6 +25,8 @@ function Home() {
   const [vehiclePanel, setvehiclePanel] = useState(false);
   const confirmRideRef = useRef(null);
   const [confirmRidePanel, setconfirmRidePanel] = useState(false);
+  const findDriverRef = useRef(null);
+  const [findDriverPanel, setfindDriverPanel] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -78,6 +81,21 @@ function Home() {
       }
     },
     [confirmRidePanel]
+  );
+
+  useGSAP(
+    function () {
+      if (findDriverPanel === true) {
+        gsap.to(findDriverRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(findDriverRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [findDriverPanel]
   );
 
   return (
@@ -148,9 +166,19 @@ function Home() {
 
       <div
         ref={confirmRideRef}
-        className=" h-[60vh] w-full bg-[#eee] fixed bottom-0 rounded-t-3xl translate-y-full flex flex-col items-center justify-start"
+        className=" h-[62vh] w-full bg-white fixed bottom-0 rounded-t-3xl translate-y-full flex flex-col items-center justify-start"
       >
-        <ConfirmRide setconfirmRidePanel={setconfirmRidePanel} />
+        <ConfirmRide
+          setconfirmRidePanel={setconfirmRidePanel}
+          setfindDriverPanel={setfindDriverPanel}
+        />
+      </div>
+
+      <div
+        ref={findDriverRef}
+        className=" h-[55vh] w-full bg-white fixed bottom-0 rounded-t-3xl translate-y-full flex flex-col items-center justify-start"
+      >
+        <FindDriver setconfirmRidePanel={setconfirmRidePanel} />
       </div>
     </>
   );
