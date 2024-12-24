@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import LocationSuggestions from "../components/LocationSuggestions";
 import Vehicles from "../components/Vehicles";
+import ConfirmRide from "../components/ConfirmRide";
 
 function Home() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -19,6 +20,10 @@ function Home() {
   const [destination, setdestination] = useState("");
   const suggestionRef = useRef(null);
   const arrowRef = useRef(null);
+  const vehicleRef = useRef(null);
+  const [vehiclePanel, setvehiclePanel] = useState(false);
+  const confirmRideRef = useRef(null);
+  const [confirmRidePanel, setconfirmRidePanel] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -43,6 +48,36 @@ function Home() {
       }
     },
     [ShowSuggestion]
+  );
+
+  useGSAP(
+    function () {
+      if (vehiclePanel === true) {
+        gsap.to(vehicleRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(vehicleRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [vehiclePanel]
+  );
+
+  useGSAP(
+    function () {
+      if (confirmRidePanel === true) {
+        gsap.to(confirmRideRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(confirmRideRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [confirmRidePanel]
   );
 
   return (
@@ -93,12 +128,30 @@ function Home() {
           </form>
 
           <div ref={suggestionRef} className="w-full bg-white overflow-hidden">
-            <LocationSuggestions />
+            <LocationSuggestions
+              setShowSuggestion={setShowSuggestion}
+              setvehiclePanel={setvehiclePanel}
+            />
           </div>
         </div>
       </div>
 
-      <Vehicles />
+      <div
+        ref={vehicleRef}
+        className=" h-[50vh] w-full bg-[#eee] fixed bottom-0 rounded-t-3xl translate-y-full"
+      >
+        <Vehicles
+          setvehiclePanel={setvehiclePanel}
+          setconfirmRidePanel={setconfirmRidePanel}
+        />
+      </div>
+
+      <div
+        ref={confirmRideRef}
+        className=" h-[50vh] w-full bg-[#eee] fixed bottom-0 rounded-t-3xl translate-y-full"
+      >
+        <ConfirmRide setconfirmRidePanel={setconfirmRidePanel} />
+      </div>
     </>
   );
 }

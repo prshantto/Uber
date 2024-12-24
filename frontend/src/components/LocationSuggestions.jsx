@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 import React from "react";
@@ -21,13 +22,20 @@ const locationData = [
   },
 ];
 
-const LocationSuggestions = () => {
+const LocationSuggestions = (props) => {
   return (
     <>
       {locationData.map(function (e) {
         return (
-          <div className="flex items-center gap-3 mx-4  my-5">
-            <i className="ri-map-pin-fill text-3xl bg-[#eee] rounded-full p-3"></i>
+          <div
+            key={e.id}
+            onClick={() => {
+              props.setvehiclePanel(true);
+              props.setShowSuggestion(false);
+            }}
+            className="flex items-center gap-3 mx-4  my-5 active:border-2 active:border-black rounded-2xl py-3 px-2"
+          >
+            <i className="ri-map-pin-fill text-xl bg-[#eee] rounded-full px-3 py-2"></i>
             <div>
               <h2 className="text-2xl font-semibold">{e.address}</h2>
               <p className="text-nowrap text-lg">{e.address2}</p>
