@@ -148,7 +148,7 @@ function Home() {
 
       <div
         ref={confirmRideRef}
-        className=" h-[50vh] w-full bg-[#eee] fixed bottom-0 rounded-t-3xl translate-y-full"
+        className=" h-[60vh] w-full bg-[#eee] fixed bottom-0 rounded-t-3xl translate-y-full flex flex-col items-center justify-start"
       >
         <ConfirmRide setconfirmRidePanel={setconfirmRidePanel} />
       </div>
